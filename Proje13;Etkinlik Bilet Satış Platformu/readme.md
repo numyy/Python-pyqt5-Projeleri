@@ -37,13 +37,3 @@ PyQt5 kütüphanesi kullanılarak bir grafik kullanıcı arayüzü oluşturulmu�
 2. Terminalde proje dizinine gidin.
 3. `python etkinlikplatform.py` komutunu çalıştırın.
 4. Arayüzden yeni etkinlikler ekleyebilir, bilet satabilir ve etkinlikleri görüntüleyebilirsiniz.
-
-## Katkıda Bulunma
-
-Eğer bu projeye katkıda bulunmak isterseniz, lütfen şu adımları izleyin:
-
-1. Projeyi forklayın.
-2. Özellik dalınızı oluşturun: `git checkout -b yeni-ozellik`
-3. Değişikliklerinizi yapın ve commitleyiniz: `git commit -m 'Yeni özellik: açıklama'`
-4. Dalınızı gönderin: `git push origin yeni-ozellik`
-5. Bir Pull İsteği gönderin.
