@@ -19,7 +19,7 @@ Bu proje, Python ve PyQt5 kullanılarak geliştirilmiş bir Etkinlik Yönetim Si
 
 1. Projeyi klon alın veya ZIP dosyasını indirin.
 
-2. Proje dizinine gidin:cd etkinlik-yonetim-sistemi
+2. Proje dizinine gidin: cd etkinlik-yonetim-sistemi
 3. Gerekli Python paketlerini kurun: pip install -r requirements.txt
 
  ## Kullanım
@@ -29,10 +29,10 @@ Bu proje, Python ve PyQt5 kullanılarak geliştirilmiş bir Etkinlik Yönetim Si
 
 ## Ekran Görüntüleri
 
-![Ana Menü](screenshots/ana_menu.png)
-![Etkinlik Oluşturma](screenshots/etkinlik_olustur.png)
-![Etkinlik Düzenleme](screenshots/etkinlik_duzenle.png)
-![Bilet Satın Alma](screenshots/bilet_satin_al.png)
+![Ana Menü]![image](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/ca9122c6-09dc-431a-92ce-78759d3d07bc)
+![Etkinlik Oluşturma]![image](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/91d76376-7ffc-44ac-9f6c-1d564d1cf9b3)
+![Etkinlik Düzenleme]![image](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/4eadb7d2-ecc2-410a-8d96-6c926da33999)
+![Bilet Satın Alma]![image](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/ca57ac07-87d4-40b7-9ca5-d420bcec6c23)
 
 ## Katkıda Bulunma
 
