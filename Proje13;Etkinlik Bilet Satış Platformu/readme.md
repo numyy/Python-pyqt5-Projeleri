@@ -37,3 +37,8 @@ PyQt5 kütüphanesi kullanılarak bir grafik kullanıcı arayüzü oluşturulmu�
 2. Terminalde proje dizinine gidin.
 3. `python etkinlikplatform.py` komutunu çalıştırın.
 4. Arayüzden yeni etkinlikler ekleyebilir, bilet satabilir ve etkinlikleri görüntüleyebilirsiniz.
+
+## Uygulama görselleri
+
+![image](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/91440049-b6ca-4cba-aa78-d65e0d8b56d5)
+
