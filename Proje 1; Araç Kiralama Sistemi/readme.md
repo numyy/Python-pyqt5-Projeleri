@@ -34,4 +34,5 @@ Bu proje, [MIT Lisansı](https://opensource.org/licenses/MIT) altında lisanslan
 
 ## Uygulama görselleri
 
-![image](https://github.com/Omercoskun77/PyQt-Projeleri/assets/167522812/f77ae5b2-39d0-45e5-9a42-58e742490329)
+
+![arac_kiralama](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/963c5c25-390b-4ea4-a6f5-fba19970c53b)
