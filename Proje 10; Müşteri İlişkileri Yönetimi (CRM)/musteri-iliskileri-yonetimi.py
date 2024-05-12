@@ -28,9 +28,13 @@ class AnaPencere(QMainWindow):
         self.destek_talebi_buton = QPushButton("Destek Talebi Oluştur")
         self.destek_talebi_buton.clicked.connect(self.destek_talebi_dialog)
 
+        self.sil_buton = QPushButton("Seçili Öğeyi Sil")
+        self.sil_buton.clicked.connect(self.secili_ogeyi_sil)
+
         self.genel_layout.addWidget(self.musteri_ekle_buton)
         self.genel_layout.addWidget(self.satis_ekle_buton)
         self.genel_layout.addWidget(self.destek_talebi_buton)
+        self.genel_layout.addWidget(self.sil_buton)
 
         merkez_widget = QWidget()
         merkez_widget.setLayout(self.genel_layout)
@@ -123,6 +127,14 @@ class AnaPencere(QMainWindow):
         QMessageBox.information(dialog, "Destek Talebi Oluşturuldu",
                                 f"Talep Numarası: {talep_numarasi} ve Talep Detayları başarıyla oluşturuldu.")
         dialog.accept()
+
+    def secili_ogeyi_sil(self):
+        secili_oge = self.liste.currentRow()
+        if secili_oge != -1:
+            silinecek_oge = self.liste.takeItem(secili_oge)
+            if silinecek_oge:
+                # Kaydedilen bilgilerden de silinmesi gerekiyorsa bu satırı ekleyebiliriz
+                self.kaydedilen_bilgiler.remove(silinecek_oge.text())
 
     def closeEvent(self, event):
         print("Uygulamadan çıkılıyor. Kaydedilen bilgiler:")
