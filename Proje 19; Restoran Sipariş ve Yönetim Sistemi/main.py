@@ -230,7 +230,7 @@ class MainWindow(QMainWindow):
         self.product_details = {}
         menu_data = get_menu()
         for item_id, category, item_name, price, stock in menu_data:
-            item_text = f"{category}: {item_name} - ${price:.2f}"
+            item_text = f"{item_name} - ${price:.2f} - Stok: {stock}"
             self.menu_list.addItem(item_text)
             self.product_details[item_name] = (category, price, stock)
         self.menu_list.itemDoubleClicked.connect(self.add_to_cart)
@@ -265,7 +265,7 @@ class MainWindow(QMainWindow):
         self.menu_list.clear()
         self.product_details.clear()
         for item_id, category, item_name, price, stock in menu_data:
-            item_text = f"{category}: {item_name} - ${price:.2f}"
+            item_text = f"{item_name} - ${price:.2f} - Stok: {stock}"
             self.menu_list.addItem(item_text)
             self.product_details[item_name] = (category, price, stock)
 
@@ -290,8 +290,28 @@ class MainWindow(QMainWindow):
 
     def add_to_cart(self, item):
         item_text = item.text()
-        self.cart.append(item_text)
-        self.cart_list.addItem(item_text)
+        parts = item_text.split(" - ")
+        product_name = parts[0]
+        price = float(parts[1].replace('$', ''))
+        stock = int(parts[2].split(": ")[1])
+
+        if stock <= 0:
+            QMessageBox.warning(self, "Stokta Yok", f"{product_name} ürününden stokta kalmamıştır.")
+            return
+
+        # Sepete ekle
+        self.cart.append(f"{product_name} - ${price}")
+        self.cart_list.addItem(f"{product_name} - ${price}")
+
+        # Stokları güncelle
+        new_stock = stock - 1
+        self.product_details[product_name] = (self.product_details[product_name][0], price, new_stock)
+
+        # Kullanıcı arayüzünde ve veritabanında stok güncelle
+        update_stock_in_db(product_name, self.product_details[product_name][0], new_stock, price)
+        self.menu_list.clear()
+        for key, value in self.product_details.items():
+            self.menu_list.addItem(f"{key} - ${value[1]:.2f} - Stok: {value[2]}")
 
     def show_cart(self):
         if not self.cart:
@@ -304,11 +324,10 @@ class MainWindow(QMainWindow):
             self.submit_order()
 
     def submit_order(self):
-        items = [item.split(": ")[1] for item in self.cart]
+        items = [item for item in self.cart]
         address_dialog = AddressDialog(self)
         address_result = address_dialog.exec_()
         if address_result == QDialog.Accepted:
-            customer_name = "Online Customer"  # Default isim yerine müşteri ismi kullanılacak
             customer_address = address_dialog.address_input.text()
 
             # Kullanıcıdan isim ve soyisim bilgisi al
@@ -317,22 +336,22 @@ class MainWindow(QMainWindow):
             if name_result == QDialog.Accepted:
                 customer_name = f"{customer_name_dialog.name_input.text()} {customer_name_dialog.surname_input.text()}"
 
-            customer = Customer(customer_name, customer_address)
-            order_number = len(get_orders()) + 1
-            order = Order(order_number, items, customer)
-            add_order(order)
+                customer = Customer(customer_name, customer_name_dialog.surname_input.text(), customer_address)
+                order_number = len(get_orders()) + 1
+                order = Order(order_number, items, customer)
+                add_order(order)
 
-            for item in self.cart:
-                product_name, _ = item.split(" - $")
-                _, price, stock = self.product_details[product_name]
-                new_stock = stock - 1
-                update_stock_in_db(product_name, 'Yemek', new_stock, price)
+                for item in self.cart:
+                    product_name, _ = item.split(" - $")
+                    _, price, stock = self.product_details[product_name]
+                    new_stock = stock - 1
+                    update_stock_in_db(product_name, self.product_details[product_name][0], new_stock, price)
 
-            self.cart.clear()
-            self.cart_list.clear()
+                self.cart.clear()
+                self.cart_list.clear()
 
-            QMessageBox.information(self, "Sipariş Onayı", "Siparişiniz alındı. Teşekkür ederiz!")
-            self.load_orders()
+                QMessageBox.information(self, "Sipariş Onayı", "Siparişiniz alındı. Teşekkür ederiz!")
+                self.load_orders()
 
     def delete_selected_order(self):
         selected_order = self.order_list.currentRow()
