@@ -1,9 +1,9 @@
-import sys
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QLabel, QListWidget, QLineEdit, QTextEdit, QMessageBox,
     QFormLayout, QDialog, QDialogButtonBox, QListWidgetItem, QFileDialog, QComboBox
 )
+import sys
 
 class Ders:
     def __init__(self, ders_adi, icerik, ogretmen):
@@ -71,7 +71,7 @@ class AddCourseDialog(QDialog):
                 "Öğretmenler": ["Derya Deniz", "Efe Ay", "Fatma Çelik"]
             },
             "Biyoloji": {
-                "Konular": ["Genetik", "Ekoloji", "Hücre Biyolojisi"],
+                "Konular": ["Genetik", "Ekoloği", "Hücre Biyolojisi"],
                 "Öğretmenler": ["Gökhan El", "Hakan İş", "Işıl Örnek"]
             },
             "Coğrafya": {
@@ -84,7 +84,7 @@ class AddCourseDialog(QDialog):
             },
             "Felsefe": {
                 "Konular": ["Etik", "Estetik", "Mantık"],
-                "Öğretmenlers": ["Rıza Bey", "Seda Vural", "Tayfun Uzun"]
+                "Öğretmenler": ["Rıza Bey", "Seda Vural", "Tayfun Uzun"]
             }
         }
 
@@ -132,7 +132,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Eğitim Materyali Paylaşım Platformu")
-        self.setGeometry(100, 100, 800, 500)  # Reduced window size for better layout
+        self.setGeometry(100, 100, 800, 500)
 
         self.courses = []
         self.students = []
@@ -144,7 +144,7 @@ class MainWindow(QMainWindow):
 
         self.details_text = QTextEdit()
         self.details_text.setReadOnly(True)
-        self.details_text.setMaximumHeight(150)  # Reduced the size of the large text box
+        self.details_text.setMaximumHeight(150)
 
         main_layout.addWidget(self.details_text)
 
@@ -164,7 +164,7 @@ class MainWindow(QMainWindow):
 
         self.soru_gonder_button = QPushButton("Soru Sor")
         self.soru_gonder_button.clicked.connect(self.send_question)
-        self.soru_gonder_button.setEnabled(False)  # Initially disabled
+        self.soru_gonder_button.setEnabled(False)
 
         self.add_course_button = QPushButton("Ders Ekle")
         self.add_course_button.clicked.connect(self.add_course)
@@ -207,6 +207,24 @@ class MainWindow(QMainWindow):
                 self.details_text.append(f"Yüklenen Materyal: {materyal_adi}")
                 QMessageBox.information(self, "Materyal Yükleme", f"'{materyal_adi}' başarıyla yüklendi!")
 
+    def send_question(self):
+        if not self.current_student:
+            QMessageBox.warning(self, "Hata", "Önce bir öğrenci kaydedin!")
+            return
+
+        course_names = [course.ders_adi for course in self.courses]
+        dialog = self.AskQuestionDialog(course_names, self)
+        if dialog.exec_() == QDialog.Accepted:
+            details = dialog.get_details()
+            course_name = details['course']
+            question = details['question']
+            for course in self.courses:
+                if course.ders_adi == course_name:
+                    self.current_student.soru_sor(course, question)
+                    self.details_text.append(f"Soru: {question}\nDers: {course_name}")
+                    QMessageBox.information(self, "Soru Gönderildi", "Sorunuz başarıyla gönderildi!")
+                    break
+
     class AskQuestionDialog(QDialog):
         def __init__(self, courses, parent=None):
             super().__init__(parent)
@@ -234,33 +252,6 @@ class MainWindow(QMainWindow):
                 'course': self.course_input.currentText(),
                 'question': self.question_input.toPlainText()
             }
-
-    def send_question(self):
-        if not self.current_student:
-            QMessageBox.warning(self, "Hata", "Öğrenci bilgisi eksik, lütfen önce bir öğrenci kaydedin.")
-            return
-        if not self.courses:
-            QMessageBox.warning(self, "Hata", "Kurs listesi boş, lütfen önce bir ders ekleyin.")
-            return
-
-        course_names = [course.ders_adi for course in self.courses]
-
-        try:
-            dialog = AskQuestionDialog(course_names, self)
-            if dialog.exec_() == QDialog.Accepted:
-                details = dialog.get_details()
-                selected_course = next((course for course in self.courses if course.ders_adi == details['course']),
-                                       None)
-                if not selected_course:
-                    QMessageBox.warning(self, "Hata", "Seçilen kurs bulunamadı.")
-                    return
-
-                selected_course.soru_sor(details['question'], self.current_student)
-                self.details_text.append(f"Sorulan Soru: {details['question']}")
-                QMessageBox.information(self, "Başarılı", "Sorunuz başarıyla gönderildi!")
-        except Exception as e:
-            QMessageBox.critical(self, "Hata", f"Bir hata oluştu: {str(e)}")
-            return
 
     def register_student(self):
         name = self.student_name_input.text()
