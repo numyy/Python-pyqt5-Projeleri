@@ -43,12 +43,13 @@ Bu proje [MIT Lisansı](https://opensource.org/licenses/MIT) altında lisanslanm
 
 ## Uygulama görselleri
 
-![image](https://github.com/Omercoskun77/PyQt-Projeleri/assets/167522812/1c2b716e-a81c-4d85-8a72-ae4308adfa51)
-![image](https://github.com/Omercoskun77/PyQt-Projeleri/assets/167522812/673addbc-d3c2-4aac-bcba-80ce86bdf25d)
-![image](https://github.com/Omercoskun77/PyQt-Projeleri/assets/167522812/0ff4c0ce-3a26-4932-8688-6cb056d5fbe1)
-![image](https://github.com/Omercoskun77/PyQt-Projeleri/assets/167522812/e6d1a185-9527-4ff5-8bf3-6192dda7c9c2)
 
+![stok](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/68e1868d-d456-4043-a721-46041c8651e0)
 
+![stok2](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/8d27f710-22c8-4e63-808f-e9d2e4d64926)
 
+![stok3](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/d9db485e-0b76-45d6-b9c0-3edb9f77ad90)
+
+![stok4](https://github.com/numyy/Python-pyqt5-Projeleri/assets/148050750/b865db4d-e87b-4339-9572-c7b5cead9a6d)
 
 
