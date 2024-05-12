@@ -196,9 +196,9 @@ class OtelSayfasi(QWidget):
             self.ucret_label.setText("Ücret: 0 TL")
 
     def gun_farki(self):
-        format_str = "dd.MM.yyyy"
-        baslangic = datetime.strptime(self.secilen_tarihler[0], format_str)
-        bitis = datetime.strptime(self.secilen_tarihler[1], format_str)
+        format_str = "%d.%m.%Y"
+        baslangic = datetime.datetime.strptime(self.secilen_tarihler[0], format_str)
+        bitis = datetime.datetime.strptime(self.secilen_tarihler[1], format_str)
         return (bitis - baslangic).days + 1
 
     def oda_tipi_secildi(self, item):
